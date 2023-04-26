@@ -10,7 +10,7 @@ import java.util.Map;
 public class RequestHelpers {
 
     private static final HttpClient httpClient = HttpClient.newBuilder().build();
-    private static final String BASE_URL = "http://localhost:8080/api";
+    private static final String BASE_URL = "http://localhost:8082/api";
 
     public static HttpResponse<String> sendGetRequestTo(String endpoint) {
         HttpRequest request = HttpRequest.newBuilder()
