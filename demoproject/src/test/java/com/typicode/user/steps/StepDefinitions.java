@@ -64,7 +64,7 @@ public class StepDefinitions {
     @Then("the response should contain all persons")
     public void the_response_should_contain_all_persons() {
         String responseBody = response.body();
-        Assert.assertTrue(responseBody.contains("Jyo"));
+        Assert.assertTrue(responseBody.contains("Guru"));
     }
 
 
@@ -79,10 +79,16 @@ public class StepDefinitions {
         response = RequestHelpers.sendGetRequestTo(endpoint);
         responseBody = response.body();
     }
+    @Then("the response status code is {string}")
+    public void the_response_status_code(String expectedCode) {
+        int actualStatusCode = this.response.statusCode();
+        assertEquals(Integer.parseInt(expectedCode), actualStatusCode);
+    }
+
+
     @Then("the response should contain the following details")
     public void theResponseShouldContainTheFollowingDetails(io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> expectedData = dataTable.asMaps(String.class, String.class);
-
         List<Map<String, String>> actualData = new ArrayList<>();
         JsonObject jsonObject = JsonParser.parseString(response.body()).getAsJsonObject();
         Map<String, String> actualPerson = new HashMap<>();
@@ -91,7 +97,6 @@ public class StepDefinitions {
         actualPerson.put("age", jsonObject.get("age").getAsString());
         actualPerson.put("location", jsonObject.get("location").getAsString());
         actualData.add(actualPerson);
-
         assertEquals(expectedData, actualData);
     }
 
